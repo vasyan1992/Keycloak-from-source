@@ -23,16 +23,16 @@ RUN mv /tmp/keycloak/dist/target/lib /opt/keycloak
 
 RUN chmod -R g+rwX /opt/keycloak
 
-#FROM registry.access.redhat.com/ubi8-minimal
-#ENV LANG en_US.UTF-8
+FROM registry.access.redhat.com/ubi8-minimal
+ENV LANG en_US.UTF-8
 
-#COPY --from=builder --chown=1000:0 /opt/keycloak /opt/keycloak
+COPY --from=builder --chown=1000:0 /opt/keycloak /opt/keycloak
 
-#RUN microdnf update -y && microdnf install -y --nodocs java-17-openjdk-headless glibc-langpack-en && microdnf clean all && rm -rf /var/cache/yum/* && echo "keycloak:x:0:root" >> /etc/group && echo "keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin" >> /etc/passwd
+RUN microdnf update -y && microdnf install -y --nodocs java-17-openjdk-headless glibc-langpack-en && microdnf clean all && rm -rf /var/cache/yum/* && echo "keycloak:x:0:root" >> /etc/group && echo "keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin" >> /etc/passwd
 
-#USER 1000
+USER 1000
 
-#EXPOSE 8080
-#EXPOSE 8443
+EXPOSE 8080
+EXPOSE 8443
 
-#ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
